@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <argp.h>
+#include "utils/argp.h"
 
 #include "uftrace.h"
 #include "version.h"
