@@ -11,6 +11,9 @@
 #include "utils/kernel.h"
 #include "libmcount/mcount.h"
 
+#define UFTRACE_TMPDIR_NAME "/tmp"
+#define UFTRACE_TEMPL_NAME UFTRACE_TMPDIR_NAME "/uftrace-live-XXXXXX"
+#define UFTRACE_LOCALTEMPL_NAME UFTRACE_DIR_NAME UFTRACE_TMPDIR_NAME "/uftrace-live-XXXXXX"
 
 static char *tmp_dirname;
 static void cleanup_tempdir(void)
@@ -19,6 +22,7 @@ static void cleanup_tempdir(void)
 		return;
 
 	remove_directory(tmp_dirname);
+	free(tmp_dirname);
 	tmp_dirname = NULL;
 }
 
@@ -97,7 +101,7 @@ static void setup_child_environ(struct opts *opts)
 
 int command_live(int argc, char *argv[], struct opts *opts)
 {
-	char template[32] = "/tmp/uftrace-live-XXXXXX";
+	char* template = NULL;
 	int fd;
 	struct sigaction sa = {
 		.sa_flags = SA_RESETHAND,
