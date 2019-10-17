@@ -110,6 +110,7 @@ int command_live(int argc, char *argv[], struct opts *opts)
 
 	tmp_dirname = template;
 	umask(022);
+
 	fd = mkstemp(template);
 	if (fd < 0) {
 		if (errno != EPERM)
